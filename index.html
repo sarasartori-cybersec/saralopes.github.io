@@ -11,11 +11,11 @@
     
     <style>
         :root {
-            --armadillo: #483f39;   /* Dark Font Color */
-            --swiss-coffee: #d4cbca; /* Light Background Color */
+            --armadillo: #483f39;   /* Dark Font */
+            --swiss-coffee: #d4cbca; /* Light Background */
             --nobel: #b3afad;        /* Secondary Background */
             --manatee: #98989f;      /* Muted Text */
-            --accent-pink: #c23768;  /* Highlight Color */
+            --accent-pink: #c23768;  /* Pink Highlight */
             --white: #ffffff;
             --transition: all 0.3s ease;
         }
@@ -26,7 +26,9 @@
             box-sizing: border-box;
         }
 
-        html { scroll-behavior: smooth; }
+        html { 
+            scroll-behavior: smooth; 
+        }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -36,7 +38,7 @@
             overflow-x: hidden;
         }
 
-        /* Navigation */
+        /* Fixed Navigation */
         nav {
             position: fixed;
             top: 0;
@@ -53,7 +55,7 @@
             list-style: none;
             display: flex;
             justify-content: flex-end;
-            gap: 1.5rem;
+            gap: 2rem;
         }
 
         nav a {
@@ -64,45 +66,46 @@
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: var(--transition);
-            padding: 5px 0;
         }
 
         nav a:hover { color: var(--accent-pink); }
 
-        /* Split Layout Container */
-        .split-container {
+        /* Main Container - Flex for Split Layout */
+        .main-container {
             display: flex;
             min-height: 100vh;
         }
 
-        /* Left Side Panel - Main Image (Desktop Default) */
+        /* Left Side Panel - Image */
         .left-side {
             position: fixed;
             left: 0;
             top: 0;
-            width: 40%;
+            width: 45%; /* Desktop vertical width */
             height: 100vh;
-            /* Prioritize the top of the image (headshot) and crop the bottom */
+            /* Prioritize headshot and crop bottom */
             background: url('pictures/profile.png') top center / cover no-repeat;
             z-index: 1;
         }
 
-        /* Right Side - Content */
+        /* Right Side Panel - Content */
         .right-side {
-            margin-left: 40%;
-            width: 60%;
+            margin-left: 45%;
+            width: 55%;
             background: var(--swiss-coffee);
             position: relative;
             z-index: 2;
         }
 
-        /* Sections */
+        /* Section Styling */
         section {
             padding: 8rem 4rem;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: center;
+            /* Fix for Nav Bar covering titles */
+            scroll-margin-top: 60px;
         }
 
         section:nth-child(even) {
@@ -114,12 +117,7 @@
             color: var(--armadillo);
         }
 
-        h1 {
-            font-size: 3rem;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-        }
-
+        h1 { font-size: 3rem; line-height: 1.1; margin-bottom: 1.5rem; }
         h1 span { color: var(--accent-pink); }
 
         h2 {
@@ -135,7 +133,6 @@
             font-weight: 600;
             margin-bottom: 1rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
         }
 
         /* Experience Cards */
@@ -150,11 +147,9 @@
             background: var(--white);
             padding: 1.5rem;
             border-radius: 4px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
             border-top: 4px solid var(--accent-pink);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
         }
-
-        .exp-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
 
         /* Modern Rounded Button */
         .cta-button {
@@ -163,14 +158,13 @@
             background: transparent;
             color: var(--accent-pink);
             border: 2px solid var(--accent-pink);
-            border-radius: 50px; 
+            border-radius: 50px;
             text-decoration: none;
             font-weight: 600;
             margin-top: 2rem;
             transition: var(--transition);
             width: fit-content;
             text-transform: uppercase;
-            letter-spacing: 1px;
             font-size: 0.9rem;
         }
 
@@ -183,58 +177,57 @@
         .contact-links {
             display: flex;
             flex-direction: column;
-            gap: 1.2rem;
+            gap: 1rem;
             margin-top: 2rem;
         }
 
         .contact-links a {
             color: var(--armadillo);
             text-decoration: none;
-            font-size: 1.1rem;
             display: flex;
             align-items: center;
             gap: 12px;
-            transition: var(--transition);
         }
 
-        .contact-links a:hover { color: var(--accent-pink); }
-        .contact-links i { color: var(--accent-pink); width: 20px; text-align: center; }
+        .contact-links i { color: var(--accent-pink); width: 20px; }
 
-        /* Responsive Design Updates */
-        @media (max-width: 1024px) {
-            .left-side { width: 40%; }
-            .right-side { margin-left: 40%; width: 60%; }
-        }
-
-        /* Mobile View - Increased Image Width */
+        /* RESPONSIVE: Mobile View "Horizontal" Layout */
         @media (max-width: 768px) {
+            .main-container {
+                flex-direction: column; /* Stacks image on top of content */
+            }
+
             .left-side {
-                width: 45%; /* Increased from 30% as requested */
-                display: block !important;
+                position: relative; /* Removes fixed positioning for stacking */
+                width: 100%;
+                height: 50vh; /* Horizontal impact: wide but shorter height */
+                z-index: 1;
             }
 
             .right-side {
-                margin-left: 45%; /* Adjusted to match image width */
-                width: 55%;
+                margin-left: 0;
+                width: 100%;
+                z-index: 2;
             }
 
-            nav { padding: 0.8rem 0.5rem; }
-            nav ul { gap: 0.8rem; justify-content: center; }
-            nav a { font-size: 0.7rem; letter-spacing: 0.5px; }
+            section {
+                padding: 4rem 1.5rem;
+                min-height: auto; /* Sections don't need to be full screen height on mobile */
+            }
 
-            h1 { font-size: 1.6rem; }
-            h2 { font-size: 1.4rem; }
-            section { padding: 4rem 1rem; }
-            
-            .experience-grid { grid-template-columns: 1fr; }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.7rem; }
+
+            nav ul {
+                justify-content: center;
+                gap: 1rem;
+            }
+            nav a { font-size: 0.75rem; }
         }
 
-        /* Small Phone View */
         @media (max-width: 480px) {
-            .left-side { width: 45%; }
-            .right-side { margin-left: 45%; width: 55%; }
-            
-            nav a { font-size: 0.6rem; }
+            .left-side { height: 40vh; } /* Slightly shorter image for small phones */
+            nav a { font-size: 0.65rem; }
         }
     </style>
 </head>
@@ -249,23 +242,23 @@
         </ul>
     </nav>
 
-    <div class="split-container">
+    <div class="main-container">
         <div class="left-side"></div>
 
         <div class="right-side">
             <section id="home">
                 <p class="subtitle">GRC & IAM Specialist</p>
                 <h1>Cybersecurity <span>Governance</span> & Identity Management</h1>
-                <p>Strategizing risk management and building robust compliance frameworks to secure enterprise digital landscapes.</p>
+                <p>Developing strategic risk management frameworks and robust identity solutions to protect enterprise digital assets.</p>
                 <a href="#contact" class="cta-button">Secure Your Future</a>
             </section>
 
             <section id="about">
                 <h2>Who I Am</h2>
-                <p>I am a cybersecurity professional dedicated to bridging technical security controls with strategic business objectives. I specialize in navigating complex regulatory environments and ensuring identity governance across enterprise ecosystems.</p>
-                <div style="margin-top: 2.5rem;">
-                    <p><strong>Professional Credentials:</strong></p>
-                    <ul style="list-style: none; margin-top: 1.2rem; color: var(--accent-pink); font-weight: 600; display: flex; flex-direction: column; gap: 0.8rem;">
+                <p>I am a cybersecurity consultant specializing in the intersection of technical security and business risk. My approach ensures that compliance isn't just a checklist, but a driver for operational excellence.</p>
+                <div style="margin-top: 2rem;">
+                    <p><strong>Core Certifications:</strong></p>
+                    <ul style="list-style: none; margin-top: 1rem; color: var(--accent-pink); font-weight: 600; display: flex; flex-direction: column; gap: 0.5rem;">
                         <li><i class="fas fa-certificate"></i> CISSP - Security Professional</li>
                         <li><i class="fas fa-certificate"></i> CISM - Security Manager</li>
                         <li><i class="fas fa-certificate"></i> ISO 27001 Lead Implementer</li>
@@ -277,34 +270,34 @@
                 <h2>Experience</h2>
                 <div class="experience-grid">
                     <div class="exp-card">
-                        <h3>Identity Architecture</h3>
-                        <p>Deployed scalable IAM solutions for global organizations, reducing unauthorized access by 65%.</p>
+                        <h3>Identity Governance</h3>
+                        <p>Architected IAM solutions for 50,000+ users, achieving a 65% reduction in unauthorized access attempts.</p>
                     </div>
                     <div class="exp-card">
-                        <h3>Regulatory Compliance</h3>
-                        <p>Achieved ISO 27001 and SOC 2 Type II certifications for major SaaS providers.</p>
+                        <h3>Compliance Excellence</h3>
+                        <p>Guided firms through ISO 27001 and SOC 2 Type II audits with 100% success rate.</p>
                     </div>
                     <div class="exp-card">
-                        <h3>Enterprise Risk</h3>
-                        <p>Developed frameworks prioritizing critical threats, reducing annual risk exposure by 40%.</p>
+                        <h3>Risk Mitigation</h3>
+                        <p>Reduced annual enterprise risk exposure by 40% through targeted GRC frameworks.</p>
                     </div>
                     <div class="exp-card">
-                        <h3>Governance Automation</h3>
-                        <p>Implemented automated recertification processes covering 30k+ identities.</p>
+                        <h3>Lifecycle Automation</h3>
+                        <p>Implemented automated user onboarding/offboarding, eliminating security gaps in 8k+ accounts.</p>
                     </div>
                 </div>
             </section>
 
             <section id="contact">
                 <h2>Get In Touch</h2>
-                <p>Interested in strengthening your security posture? Let's discuss your organization's specific needs.</p>
+                <p>Let's discuss how we can strengthen your organization's security posture.</p>
                 <div class="contact-links">
                     <a href="mailto:your.email@example.com"><i class="fas fa-envelope"></i> your.email@example.com</a>
                     <a href="https://linkedin.com/in/yourprofile" target="_blank"><i class="fab fa-linkedin"></i> LinkedIn Profile</a>
                     <a href="https://github.com/yourusername" target="_blank"><i class="fab fa-github"></i> GitHub Portfolio</a>
                 </div>
                 
-                <footer style="margin-top: 6rem; font-size: 0.8rem; color: var(--manatee);">
+                <footer style="margin-top: 5rem; font-size: 0.8rem; color: var(--manatee);">
                     <p>&copy; 2026 GRC/IAM Cybersecurity Professional. All rights reserved.</p>
                 </footer>
             </section>
