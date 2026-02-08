@@ -11,11 +11,11 @@
     
     <style>
         :root {
-            --armadillo: #483f39;   /* Dark Font */
-            --swiss-coffee: #d4cbca; /* Light Background */
+            --armadillo: #483f39;   /* Dark Font Color */
+            --swiss-coffee: #d4cbca; /* Light Background Color */
             --nobel: #b3afad;        /* Secondary Background */
             --manatee: #98989f;      /* Muted Text */
-            --accent-pink: #c23768;  /* New Pink Highlight Color */
+            --accent-pink: #c23768;  /* Highlight Color */
             --white: #ffffff;
             --transition: all 0.3s ease;
         }
@@ -42,7 +42,7 @@
             top: 0;
             right: 0;
             width: 100%;
-            background: rgba(212, 203, 202, 0.95); /* Swiss Coffee with transparency */
+            background: rgba(212, 203, 202, 0.95);
             backdrop-filter: blur(10px);
             z-index: 1000;
             padding: 1rem 2rem;
@@ -60,7 +60,7 @@
             color: var(--armadillo);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             transition: var(--transition);
@@ -68,25 +68,25 @@
 
         nav a:hover { color: var(--accent-pink); }
 
-        /* Split Layout */
+        /* Split Layout Container */
         .split-container {
             display: flex;
             min-height: 100vh;
         }
 
-        /* Left Side - Local Image Path */
+        /* Left Side Panel - Main Image */
         .left-side {
             position: fixed;
             left: 0;
             top: 0;
             width: 40%;
             height: 100vh;
-            /* Updated image path. Ensure the 'pictures' folder is at the same level as index.html */
-            background: url('pictures/profile.png') center/cover no-repeat;
+            /* Prioritize the top of the image (headshot) and crop the bottom */
+            background: url('pictures/profile.png') top center / cover no-repeat;
             z-index: 1;
         }
 
-        /* Right Side */
+        /* Right Side - Content */
         .right-side {
             margin-left: 40%;
             width: 60%;
@@ -129,13 +129,15 @@
         }
 
         .subtitle {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             color: var(--accent-pink);
             font-weight: 600;
             margin-bottom: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        /* Grid for Experience */
+        /* Experience Cards */
         .experience-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
@@ -152,16 +154,15 @@
         }
 
         .exp-card h3 { font-size: 1.1rem; margin-bottom: 0.5rem; }
-        .exp-card p { font-size: 0.9rem; color: var(--armadillo); }
 
-        /* Rounded Button - Modern Style */
+        /* Modern Rounded Button */
         .cta-button {
             display: inline-block;
             padding: 0.8rem 2.5rem;
-            background: transparent; /* Transparent background like the example */
-            color: var(--accent-pink); /* Text color matches the border */
-            border: 2px solid var(--accent-pink); /* Colored border */
-            border-radius: 50px; /* High value for fully rounded ends */
+            background: transparent;
+            color: var(--accent-pink);
+            border: 2px solid var(--accent-pink);
+            border-radius: 50px; /* High radius for rounded "pill" shape */
             text-decoration: none;
             font-weight: 600;
             margin-top: 2rem;
@@ -169,6 +170,7 @@
             width: fit-content;
             text-transform: uppercase;
             letter-spacing: 1px;
+            font-size: 0.9rem;
         }
 
         .cta-button:hover {
@@ -177,11 +179,10 @@
             transform: translateY(-2px);
         }
 
-        /* Contact Items */
         .contact-links {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
+            gap: 1.2rem;
             margin-top: 2rem;
         }
 
@@ -191,63 +192,48 @@
             font-size: 1.1rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            transition: var(--transition);
         }
 
-        .contact-links i { color: var(--accent-pink); }
+        .contact-links a:hover { color: var(--accent-pink); }
+        .contact-links i { color: var(--accent-pink); width: 20px; text-align: center; }
 
-        /* Mobile & Desktop Optimization */
+        /* Responsive Refinements */
+        @media (max-width: 1024px) {
+            .left-side { width: 35%; }
+            .right-side { margin-left: 35%; width: 65%; }
+            section { padding: 6rem 2rem; }
+        }
+
+        /* Mobile View - Persistent Image Panel */
         @media (max-width: 768px) {
             .left-side {
-                width: 25%; /* Remains a fixed sidebar on tablets/large phones */
+                width: 30%; /* Narrow sidebar to keep headshot visible alongside content */
+                display: block !important; /* Force display on mobile */
             }
 
             .right-side {
-                margin-left: 25%;
-                width: 75%;
+                margin-left: 30%;
+                width: 70%;
             }
 
-            section {
-                padding: 5rem 1.5rem;
-            }
+            nav { padding: 0.8rem 1rem; }
+            nav ul { gap: 1rem; justify-content: center; }
+            nav a { font-size: 0.7rem; letter-spacing: 0.5px; }
 
-            h1 { font-size: 2rem; }
-            h2 { font-size: 1.6rem; }
-
-            nav ul {
-                gap: 1rem;
-                justify-content: center;
-                padding: 0.5rem;
-            }
-
-            nav a { font-size: 0.75rem; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.5rem; }
+            section { padding: 4rem 1.2rem; }
         }
 
+        /* Small Phone View */
         @media (max-width: 480px) {
-            /* On very small screens, you might want to switch to a top-banner approach 
-               for the image, but keeping it as a thin sidebar also works for consistency. 
-               Let's adjust the widths slightly for better readability. */
-            .left-side { 
-                width: 0%; /* Hide image on very small screens to prioritize content */
-                display: none; 
-            }
-            .right-side { 
-                margin-left: 0; 
-                width: 100%; 
-                padding-top: 60px; /* Add padding for fixed nav */
-            }
-            nav {
-                padding: 1rem;
-            }
-            nav ul {
-                justify-content: space-around;
-                gap: 0;
-            }
-            nav a { letter-spacing: 0; font-size: 0.7rem; }
-            section {
-                padding: 3rem 1rem;
-                min-height: auto; /* Allow sections to be shorter on mobile */
-            }
+            .left-side { width: 25%; }
+            .right-side { margin-left: 25%; width: 75%; }
+            
+            nav a { font-size: 0.65rem; }
+            .cta-button { padding: 0.7rem 1.5rem; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -269,60 +255,12 @@
             <section id="home">
                 <p class="subtitle">GRC & IAM Specialist</p>
                 <h1>Cybersecurity <span>Governance</span> & Identity Management</h1>
-                <p>Strategic risk management and robust compliance frameworks designed to protect enterprise assets and enable business growth.</p>
+                <p>Strategizing risk management and building robust compliance frameworks to secure enterprise digital landscapes.</p>
                 <a href="#contact" class="cta-button">Secure Your Future</a>
             </section>
 
             <section id="about">
                 <h2>Who I Am</h2>
-                <p>I am a dedicated cybersecurity professional with expertise in navigating the complex landscape of regulatory compliance and identity governance. I bridge the gap between technical security controls and business objectives.</p>
-                <div style="margin-top: 2rem;">
-                    <p><strong>Core Certifications:</strong></p>
-                    <ul style="list-style: none; margin-top: 1rem; color: var(--accent-pink); font-weight: 600;">
-                        <li><i class="fas fa-certificate"></i> CISSP - Security Professional</li>
-                        <li><i class="fas fa-certificate"></i> CISM - Security Manager</li>
-                        <li><i class="fas fa-certificate"></i> ISO 27001 Lead Implementer</li>
-                    </ul>
-                </div>
-            </section>
-
-            <section id="experience">
-                <h2>Professional Experience</h2>
-                <div class="experience-grid">
-                    <div class="exp-card">
-                        <h3>Zero Trust Implementation</h3>
-                        <p>Architected identity solutions for 50,000+ users, reducing unauthorized access incidents by 65%.</p>
-                    </div>
-                    <div class="exp-card">
-                        <h3>Compliance Leadership</h3>
-                        <p>Led multinational firms through ISO 27001 and SOC 2 Type II certifications with zero major non-conformities.</p>
-                    </div>
-                    <div class="exp-card">
-                        <h3>Risk Management</h3>
-                        <p>Developed enterprise frameworks that prioritized 200+ risks, reducing institutional exposure by 40%.</p>
-                    </div>
-                    <div class="exp-card">
-                        <h3>Access Governance</h3>
-                        <p>Automated recertification programs, eliminating 8,000+ orphaned accounts in retail environments.</p>
-                    </div>
-                </div>
-            </section>
-
-            <section id="contact">
-                <h2>Get In Touch</h2>
-                <p>Ready to strengthen your security posture? Let's discuss your organization's needs.</p>
-                <div class="contact-links">
-                    <a href="mailto:your.email@example.com"><i class="fas fa-envelope"></i> your.email@example.com</a>
-                    <a href="#"><i class="fab fa-linkedin"></i> LinkedIn Profile</a>
-                    <a href="#"><i class="fab fa-github"></i> GitHub Portfolio</a>
-                </div>
-                
-                <footer style="margin-top: 5rem; font-size: 0.8rem; color: var(--manatee);">
-                    <p>&copy; 2026 GRC/IAM Cybersecurity Professional.</p>
-                </footer>
-            </section>
-        </div>
-    </div>
-
-</body>
-</html>
+                <p>I am a cybersecurity professional dedicated to bridging technical security controls with strategic business objectives. I specialize in navigating complex regulatory environments and ensuring identity governance across enterprise ecosystems.</p>
+                <div style="margin-top: 2.5rem;">
+                    <p>
